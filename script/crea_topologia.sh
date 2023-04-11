@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "--- Controllo se esistono i container che stanno per essere creati, e nel caso li arresto"
-docker container ls -f name=device -f name=gateway -q > /dev/null 2>&1 && docker container stop $(docker container ls -f name=device -f name=gateway -q)
+test -n "$(docker container ls -f name=device -f name=gateway -q 2>&1)" && docker container stop $(docker container ls -f name=device -f name=gateway -q)
 echo "--- Ripulisco la lista di container eliminando quelli arrestati"
 docker container prune -f
 echo "--- Ripulisco la lista di reti virtuali eliminando quelle senza container connessi"
